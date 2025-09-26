@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 /**
  * tarea 6 ejecutar ping
  * @author Piero López Rosas
@@ -19,8 +21,22 @@ public class Lanzador_6 {
 
             try {
 
-                pb.inheritIO(); // Hago la salida del proceso ping se muestre en nuestra consola de Java en vez de una terminal.
+                 // Hago la salida del proceso ping se muestre en nuestra consola de Java en vez de una terminal.
                 Process proceso = pb.start();
+                // No uso inheritIO() ya que con eso solo se muestra en consola y no puedo procesarlo como con el bufferedReader.
+                // Leer la salida del comando línea por línea
+                BufferedReader reader = new BufferedReader(new InputStreamReader(proceso.getInputStream()));
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    String lineaLower = linea.toLowerCase();
+                    if ( lineaLower.contains("tiempo") ){
+                        System.out.println("[OK] " + linea);
+                    } else if  (lineaLower.contains("tiempo de espera agotado") || lineaLower.contains("destino inaccesible")) {
+                        System.out.println("[ERROR] " + linea);
+                    } else {
+                        System.out.println("[INFO] " + linea);
+                    }
+                }
 
                 int codigoSalida = proceso.waitFor();  //espero aquí hasta que el proceso "ping" termine.
 
