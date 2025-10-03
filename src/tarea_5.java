@@ -1,39 +1,71 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+
 public class tarea_5 {
     public static void main(String[] args) {
-        /**
-         * Crea un programa en Java que esté en bucle realizando lo siguiente:
-         *
-         * 1. Pide por consola al usuario un comando y sus parámetros a ejecutar (si fuese necesario) (Por ejemplo, ls, gnome-text-editor, open...)
-         * 2. Lanza el proceso y obtén el código de finalización del mismo.
-         * 3. Muestra el nombre del programa y el código de finalización del mismo.
-         *
-         * El programa finaliza cuando un usuario introduce “salir” y devolverá un código de salida = 0. Prueba a introducir comandos y/o parámetros inexistentes y observa el código de finalización.
-         * @author Piero López Rosas
-         */
-        Scanner op = new Scanner(System.in);
-        System.out.println("¿Cuál es el nombre de tu archivo a abrir?");
-        String notas = op.nextLine();
-        ProcessBuilder pBloc = new ProcessBuilder("ls", notas);
-        Process p;
-        try {
-            p = pBloc.start();
+        Scanner scanner = new Scanner(System.in);
+        String os = System.getProperty("os.name").toLowerCase();
+        while (true) {
+// Pedir al usuario un comando
+            System.out.println("Introduce un comando (o 'salir' para terminar) y sus parametros: ");
+            String comando = scanner.nextLine().trim();
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        // Bucle sin bloquear: hacemos otras cosas mientras el hijo vive
-        while (p.isAlive()){
-            System.out.println("El hijo sigue vivo...");
-            try {
-                Thread.sleep(1000);
+// Verificar si el usuario quiere salir
+            if (comando.equalsIgnoreCase("salir")) {
+                System.out.println("Saliendo del programa. Código de salida: 0");
+                break; // Salir del bucle
+            }
+            ProcessBuilder pb;
 
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            // 🔹 Cambio para hacerlo multiplataforma
+            if (os.contains("win")) {
+                // Windows: usar cmd /c para ejecutar comandos internos
+                pb = new ProcessBuilder("cmd", "/c", comando);
+            } else {
+                // Linux/Mac: usar shell /bin/sh -c
+                pb = new ProcessBuilder("/bin/sh", "-c", comando);
             }
 
+
+
+            try {
+// Iniciar el proceso
+                Process proceso = pb.start();
+                // Leer salida normal del comando
+                BufferedReader reader = new BufferedReader(new InputStreamReader(proceso.getInputStream()));
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    System.out.println(linea);
+                }
+
+                // Leer errores del comando
+                BufferedReader errReader = new BufferedReader(new InputStreamReader(proceso.getErrorStream()));
+                while ((linea = errReader.readLine()) != null) {
+                    System.err.println(linea);
+                }
+// Esperar a que el proceso termine y obtener el código de salida
+                int exitCode = proceso.waitFor();
+
+// Mostrar el nombre del comando y el código de finalización
+                System.out.println("Comando ejecutado: " + comando);
+                System.out.println("Código de finalización: " + exitCode);
+                if (exitCode == 0) {
+                    System.out.println("El comando se ejecutó correctamente.");
+                } else {
+                    System.out.println("El comando falló o no es válido.");
+                }
+
+            } catch (IOException e) {
+                System.out.println("Error al ejecutar el comando: " + e.getMessage());
+            } catch (InterruptedException e) {
+                System.out.println("El proceso fue interrumpido: " + e.getMessage());
+            }
         }
-        System.out.println("El hijo terminó con código: " + p.exitValue());
+
+
+// Cerrar el escáner
+        scanner.close();
     }
 }
