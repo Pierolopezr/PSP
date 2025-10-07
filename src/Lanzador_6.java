@@ -27,6 +27,9 @@ public class Lanzador_6 {
                 // Leer la salida del comando línea por línea
                 BufferedReader reader = new BufferedReader(new InputStreamReader(proceso.getInputStream()));
                 String linea;
+
+
+
                 while ((linea = reader.readLine()) != null) {
                     String lineaLower = linea.toLowerCase();
                     if ( lineaLower.contains("tiempo") ){
