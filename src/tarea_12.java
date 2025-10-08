@@ -1,28 +1,12 @@
 public class tarea_12 {
     public static void main(String[] args) {
-        int i;
-        int suma = 0;
-        for(i= 0; i<=5; i++){
+        tarea_12_HiloConPrioridad h1 = new tarea_12_HiloConPrioridad("Hilo", "pares");
+        tarea_12_HiloConPrioridad h2 = new tarea_12_HiloConPrioridad("Hilo", "impares");
+        tarea_12_HiloConPrioridad h3 = new tarea_12_HiloConPrioridad("HIlo","personalizado");
 
-            if (i % 2 == 0){
-                suma += i;
-                System.out.println(suma + " suma par");
-
-            }
-
-            if (i % 2 != 0){
-                suma += i;
-                System.out.println(suma + " suma impar");
-            }
-
-            if (i % 10 == 3 || i % 10 == 4){
-                System.out.println(i + " iiiii");
-
-            }
-
-
-
-        }
+        h1.start();
+        h2.start();
+        h3.start();
 
     }
 }
@@ -33,4 +17,6 @@ otro los impares
 , y otro, los que terminen en tres o en cuatro
 
 for(int i= 0; i<=1923; i++)
+
+
  */
