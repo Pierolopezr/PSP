@@ -1,3 +1,5 @@
+package tarea_19;
+
 public class tarea_19_contador { //Clase que tiene el contador compartido entre los hilos
     private int count = 0; // count variable con el total de vocales
 

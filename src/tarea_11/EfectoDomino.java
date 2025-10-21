@@ -1,3 +1,5 @@
+package tarea_11;
+
 /**
  * Nivel 1 (obligatorio):
  * El objetivo de este nivel es implementar el mecanismo fundamental del efecto dominó, donde cada hilo "derriba" al siguiente. Para ello:
