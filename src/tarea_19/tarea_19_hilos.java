@@ -1,3 +1,5 @@
+package tarea_19;
+
 // Clase donde se van a identificar las vocales
 public class tarea_19_hilos extends Thread {
     private String vocal;

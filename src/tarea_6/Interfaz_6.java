@@ -1,3 +1,5 @@
+package tarea_6;
+
 import java.util.Scanner;
 /**
  * tarea 6 main

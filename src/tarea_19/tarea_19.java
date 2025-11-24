@@ -1,3 +1,5 @@
+package tarea_19;
+
 import java.util.Scanner;
 
 /**
