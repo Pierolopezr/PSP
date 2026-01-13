@@ -20,39 +20,42 @@ public class tarea_38 {
         byte[] resumen = md.digest();
 
 
-        // COnvertir a Hexadecimal (Legible)
+        // Convertir a Hexadecimal (Legible)
         String hex = HexFormat.of().formatHex(resumen);
         System.out.println(hex); // Imprime: a5f3...
         */
 
 
-
-
-
         // FASE DE REGISTRO
-        String contrasena = "";
+
         System.out.println("Hola, bienvenido. Crea una contraseña: ");
         Scanner op = new Scanner(System.in);
-        contrasena = op.nextLine();
-
+        String contrasena = op.nextLine();
         // Instanciar
         MessageDigest mp = MessageDigest.getInstance("SHA-256");
         // Cargar datos
         mp.update(contrasena.getBytes());
-
         // Resumir (Devuelve bytes)
-        byte[] resumen2 = mp.digest();
+        byte[] resumen = mp.digest();
+        // Convertir a Hexadecimal (Legible)
+        String hex2 = HexFormat.of().formatHex(resumen);
 
-
-        // COnvertir a Hexadecimal (Legible)
-        String hex2 = HexFormat.of().formatHex(resumen2);
-        System.out.println(hex2);
 
         // FASE DE LOGIN
+
         System.out.println("Usuario registrado. Inicie sesión para probar: ");
         String contrasena2 = op.nextLine();
+        mp.reset(); // reutilizamos el objeto
+        mp.update(contrasena2.getBytes()); // pasar la información en bytes. Si se usa varias veces la información, se acumula
+        // Resumir (Devuelve bytes)
+        byte[] resumen2 = mp.digest();
+        // Convertir a Hexadecimal (Legible)
+        String hex3 = HexFormat.of().formatHex(resumen2);
 
-        if (contrasena2.equals(contrasena)){
+
+        // RESULTADO
+
+        if (hex2.equals(hex3)){
             System.out.println("Acceso concedido");
         }else {
             System.out.println("ERROR: Credenciales inválidas");
