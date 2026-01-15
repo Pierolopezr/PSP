@@ -6,7 +6,7 @@ import java.util.HexFormat;
 import java.util.Scanner;
 
 public class tarea_38 {
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) {
         /*
         // Instanciar
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -24,6 +24,8 @@ public class tarea_38 {
         String hex = HexFormat.of().formatHex(resumen);
         System.out.println(hex); // Imprime: a5f3...
         */
+        try{
+
 
 
         // FASE DE REGISTRO
@@ -60,6 +62,8 @@ public class tarea_38 {
         }else {
             System.out.println("ERROR: Credenciales inválidas");
         }
-
+        }catch (NoSuchAlgorithmException e){
+            System.out.println("Error de programa " + e.getMessage());
+        }
     }
 }
