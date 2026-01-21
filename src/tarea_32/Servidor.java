@@ -28,15 +28,22 @@ public class Servidor {
             // analogia de la regla:
             // get data (cantidad de caracteres) offset(desde que caracter empiezo a leer el string), getlength(cuantos caracteres quieres que lea)
             String msj = new String(peticion.getData(), 0, peticion.getLength());
-            System.out.println("msj: " + msj + " con una longitud de " + msj.length());
+            System.out.println("msj: " + msj );
 
+            msj=msj.replace("[","");
+            msj=msj.replace("]",""); // el replace indica que reemplazará los [] por el vacio para que no cuente como caracter al momento de contar las palabras largas
+            String[] palabras = msj.split(","); // el split indica que a partir de la coma es una palabra
+            String palabraGrande = palabras[0];
+            for (String palabra:palabras){ // por cada palabra dentro de palabras
+                if (palabraGrande.length()<palabra.length()) palabraGrande = palabra;
+            }
             // La información del cliente (dirección IP y puerto) está contenida en el DatagramPacket,
             // por lo que extraemos estos datos para poder enviarle una respuesta.
             int puertoCliente = peticion.getPort();
             InetAddress direccion = peticion.getAddress();
 
             // Envio una respuesta al cliente despues de haber extraido su direccion y puerto
-            String msjServidor = "Saludos desde el servidor!";
+            String msjServidor = palabraGrande;
             buffer = msjServidor.getBytes();
             DatagramPacket respuesta = new DatagramPacket(buffer, buffer.length, direccion, puertoCliente);
             datagramSocket.send(respuesta);
