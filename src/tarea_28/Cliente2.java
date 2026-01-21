@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Cliente2 {
-    static void main() {
+    public static void main(String[] args) {
         InetSocketAddress dir = new InetSocketAddress("localhost", 6666);
         String ox;
         try {
