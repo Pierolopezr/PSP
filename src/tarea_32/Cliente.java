@@ -11,7 +11,7 @@ public class Cliente {
     public static void main(String[] args) {
         int puerto_servidor = 8888;
         byte[] buffer = new byte[1024];
-        String [] listaPalabras = {"perrocaliente","ferrocarril","peru",""};
+        String [] listaPalabras = {"arbol","perrocaliente","ferrocarril","peru",""};
         try{
             InetAddress direccionServidor = InetAddress.getByName("localhost");
 
@@ -37,7 +37,7 @@ public class Cliente {
 
             // Convierte el contenido del buffer recibido en un String para poder procesarlo.
             String msjServidor = new String(peticion.getData(), 0, peticion.getLength());
-            System.out.println("msjServidor = " + msjServidor + " con una longitud de " + msj.length());
+            System.out.println("msjServidor = " + msjServidor + " con una longitud de " + msjServidor.length());
 
         }catch (SocketException e){
             e.printStackTrace();
